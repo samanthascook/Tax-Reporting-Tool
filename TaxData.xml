@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTaxData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TaxData>
+    <Country>USA</Country>
+    <State>KS</State>
+    <County />
+    <City />
+    <TaxType>STATE SALES TAX</TaxType>
+    <TaxRate>0.0615</TaxRate>
+    <NetSales>105.50</NetSales>
+    <TaxAmount>6.488250</TaxAmount>
+  </TaxData>
+  <TaxData>
+    <Country>USA</Country>
+    <State>KS</State>
+    <County>JOHNSON</County>
+    <City />
+    <TaxType>COUNTY SALES TAX</TaxType>
+    <TaxRate>0.0122</TaxRate>
+    <NetSales>105.50</NetSales>
+    <TaxAmount>1.287100</TaxAmount>
+  </TaxData>
+  <TaxData>
+    <Country>USA</Country>
+    <State>KS</State>
+    <County>JOHNSON</County>
+    <City>OVERLAND PARK</City>
+    <TaxType>LOCAL SALES TAX</TaxType>
+    <TaxRate>0.0112</TaxRate>
+    <NetSales>105.50</NetSales>
+    <TaxAmount>1.181600</TaxAmount>
+  </TaxData>
+</ArrayOfTaxData>
