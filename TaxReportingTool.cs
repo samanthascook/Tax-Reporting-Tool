@@ -38,7 +38,7 @@ namespace TaxesProblem
         {
             // To keep track of the entries in all
             // the files we have read.
-            List<Entry> list = new List<Entry>();
+            List<entry> list = new List<entry>();
 
             // Instances of the classes we are going
             // to use to read the tax files.
@@ -46,29 +46,25 @@ namespace TaxesProblem
             txtFile txt = null;
             csvFile csv = null;
 
-            string extension = "";
-
             for (int i = 0; i < args.Length; i++)
             {
                 // Check to make sure the file exists
                 if (File.Exists(args[i]))
                 {
-                    extension = Path.GetExtension(args[i]);
-
                     // If the current tax file is an xml file
-                    if (extension == ".xml")
+                    if (Path.GetExtension(args[i]) == ".xml")
                     {
                         xml = new xmlFile(args[i]);
                         list.AddRange(xml.getEntries());
                     }
                     // If the current tax file is a text file
-                    else if (extension == ".txt")
+                    else if (Path.GetExtension(args[i]) == ".txt")
                     {
                         txt = new txtFile(args[i]);
                         list.AddRange(txt.getEntries());
                     }
                     // If the current tax file is a csv file
-                    else if (extension == ".csv")
+                    else if (Path.GetExtension(args[i]) == ".csv")
                     {
                         csv = new csvFile(args[i]);
                         list.AddRange(csv.getEntries());
@@ -136,8 +132,8 @@ namespace TaxesProblem
                 // Adding the net sales and tax amount totals for 
                 // each group to the output string.
                 sb.AppendLine("");
-                sb.AppendLine("Total Net Sales: " + totalNetSales);
-                sb.AppendLine("Total Tax Amount:    " + totalTaxAmount);
+                sb.AppendLine("Total Net Sales: "+totalNetSales);
+                sb.AppendLine("Total Tax Amount:    "+totalTaxAmount);
                 sb.AppendLine("");
 
                 // Clearing the values in the total variables.
@@ -150,7 +146,7 @@ namespace TaxesProblem
         }
 
         // A class to hold each tax entry
-        public class Entry 
+        public class entry 
         {
             public string Country;
             public string State;
@@ -163,7 +159,7 @@ namespace TaxesProblem
             public decimal TaxAmount;
 
             // Constructor
-            public Entry(string country, string state, string county, string city, 
+            public entry(string country, string state, string county, string city, 
                 string taxType, decimal taxRate, decimal netSales, decimal taxAmount)
             {
                 this.Country = country;
@@ -189,7 +185,7 @@ namespace TaxesProblem
         class xmlFile
         {
             // A list to hold the entrys created when the XML file was processed.
-            List<Entry> list = new List<Entry>();
+            List<entry> list = new List<entry>();
 
             // Constructor
             public xmlFile(string fileName)
@@ -199,32 +195,28 @@ namespace TaxesProblem
 
                 XmlNodeList taxEntries = taxFile.SelectNodes("ArrayOfTaxData/TaxData");
 
-                XmlNode currentEntry = null;
-
                 // Getting the values from the XML tax file and using them to create
                 // instances of the entry class which are then added to the list.
                 for (int i = 0; i < taxEntries.Count; i++)
                 {
-                    currentEntry = taxEntries[i];
-
-                    list.Add(new Entry(currentEntry.ChildNodes[0].InnerText,
-                        currentEntry.ChildNodes[1].InnerText, currentEntry.ChildNodes[2].InnerText,
-                        currentEntry.ChildNodes[3].InnerText, currentEntry.ChildNodes[4].InnerText,
-                        Convert.ToDecimal(currentEntry.ChildNodes[5].InnerText),
-                        Convert.ToDecimal(currentEntry.ChildNodes[6].InnerText),
-                        Convert.ToDecimal(currentEntry.ChildNodes[7].InnerText)));
+                    list.Add(new entry(taxEntries[i].ChildNodes[0].InnerText,
+                        taxEntries[i].ChildNodes[1].InnerText, taxEntries[i].ChildNodes[2].InnerText,
+                        taxEntries[i].ChildNodes[3].InnerText, taxEntries[i].ChildNodes[4].InnerText,
+                        Convert.ToDecimal(taxEntries[i].ChildNodes[5].InnerText),
+                        Convert.ToDecimal(taxEntries[i].ChildNodes[6].InnerText),
+                        Convert.ToDecimal(taxEntries[i].ChildNodes[7].InnerText)));
                 }
             }
 
             // Public accessor for the list
-            public List<Entry> getEntries() { return list; }
+            public List<entry> getEntries() { return list; }
         }
 
         // Class to process the text tax files.
         class txtFile
         {
             // A list to hold the entrys created when the text file was processed.
-            List<Entry> list = new List<Entry>();
+            List<entry> list = new List<entry>();
 
             // Constructor
             public txtFile(string fileName)
@@ -236,7 +228,7 @@ namespace TaxesProblem
                 // instances of the entry class which are then added to the list.
                 while ((line = file.ReadLine()) != null)
                 {
-                    list.Add(new Entry(line.Substring(0, 3).Trim(), 
+                    list.Add(new entry(line.Substring(0, 3).Trim(), 
                         line.Substring(3, 2).Trim(), line.Substring(5, 10).Trim(), 
                         line.Substring(15, 20).Trim(), line.Substring(35, 20).Trim(),
                         Convert.ToDecimal(line.Substring(55, 6).Trim()),
@@ -248,14 +240,14 @@ namespace TaxesProblem
             }
 
             // Public accessor for the list
-            public List<Entry> getEntries() { return list; }
+            public List<entry> getEntries() { return list; }
         }
 
         // Class to process the CSV tax files.
         class csvFile
         {
             // A list to hold the entrys created when the CSV file was processed.
-            List<Entry> list = new List<Entry>();
+            List<entry> list = new List<entry>();
 
             // Constructor
             public csvFile(string fileName)
@@ -270,7 +262,7 @@ namespace TaxesProblem
                 {
                     temp = line.Split(',');
 
-                    list.Add(new Entry(temp.GetValue(0).ToString(), 
+                    list.Add(new entry(temp.GetValue(0).ToString(), 
                         temp.GetValue(1).ToString(), temp.GetValue(2).ToString(), 
                         temp.GetValue(3).ToString(), temp.GetValue(4).ToString(),
                         Convert.ToDecimal(temp.GetValue(5)), 
@@ -282,7 +274,7 @@ namespace TaxesProblem
             }
 
             // Public accessor for the list
-            public List<Entry> getEntries() { return list; }
+            public List<entry> getEntries() { return list; }
         }
 
         // Class to hold the information for each group
@@ -295,7 +287,7 @@ namespace TaxesProblem
             public string City { get; set; }
             public string TaxType { get; set; }
             public decimal TaxRate { get; set; }
-            public List<Entry> Entries { get; set; }
+            public List<entry> Entries { get; set; }
         }
     }
 }
