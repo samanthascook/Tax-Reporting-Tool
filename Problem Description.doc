@@ -1,0 +1,20 @@
+
+Three files containing tax data are provided. Each of the files contain the following fields in each record:
+Field	      Length (for fixed-length file)
+Country	    3
+State	      2
+County	    10
+City	      20
+Tax Type	  20
+Tax Rate	  6 (4 decimals). Example: 0.0615
+Net Sales	  6 (2 decimals). Example: 105.50
+Tax Amount	9 (6 decimals. Example: 06.488250
+
+The order of the fields is consistent in each file. However, the first file is in CSV format and has a .csv extension. 
+The second file is in fixed-length format with each field having the length specified above and it has a .txt extension. 
+The last file is in XML format and has a .xml extension.
+
+Create a reporting tool that reads any tax data files provided and creates an output file in CSV format that summarizes all the data. The output file must contain the same fields as specified above.This tool can be written as a console application. The tool must accept within the command-line arguments the list of tax data files that we want to process in any order. There should be no limitation to the number of files that can be provided in the command-line arguments. For example:
+	C:\Test> MyReportingTool.exe file1.txt file2.xml file3.csv filen.xml …
+For the output file, only records that have the same Country, State, County, City, Tax Type, and Tax Rate must be grouped together. Accumulate the Net Sales and Tax Amount for all records that were grouped. The output file may be written to the current directory with the name of “output.csv”.
+Implement validation to ensure that the files specified exist. Write a message into the console if a file is not found and skip it. Continue processing the rest of the files.
